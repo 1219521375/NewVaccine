@@ -4,50 +4,72 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.pokestar.vaccineremind.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ForumFragment.OnFragmentInteractionListener} interface
+ * {@link AddVaccineFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ForumFragment#newInstance} factory method to
+ * Use the {@link AddVaccineFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ForumFragment extends Fragment {
+public class AddVaccineFragment extends BaseFragment {
 
 
     private OnFragmentInteractionListener mListener;
 
+    private Button buttonSetVaccine;
 
 
-    public static ForumFragment newInstance() {
-        ForumFragment fragment = new ForumFragment();
+
+    public static AddVaccineFragment newInstance() {
+        AddVaccineFragment fragment = new AddVaccineFragment();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_add_vaccine;
+    }
+
+    @Override
+    protected int getContainerId() {
+        return R.id.vaccine_fragment_container;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forum, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_vaccine, container, false);
+        buttonSetVaccine = view.findViewById(R.id.button_set_vaccine);
+        buttonSetVaccine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(DisplayVaccineFragment.newInstance());
+            }
+        });
+        return view;
     }
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -56,18 +78,11 @@ public class ForumFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

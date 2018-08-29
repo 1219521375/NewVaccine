@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--边框-->
+    <!--android:dashWidth="50dp线段长-->
+    <!--android:dashGap="20dp"线段之间的间隔-->
+    <stroke android:width="5dp"
+        android:color="@color/background_gray"
+        android:dashWidth="50dp"
+        />
+
+</shape>

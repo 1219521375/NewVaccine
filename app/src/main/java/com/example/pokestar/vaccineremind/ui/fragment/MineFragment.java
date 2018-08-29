@@ -1,14 +1,19 @@
 package com.example.pokestar.vaccineremind.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.pokestar.vaccineremind.R;
+import com.example.pokestar.vaccineremind.ui.activity.ChangePasswordActivity;
+import com.example.pokestar.vaccineremind.ui.activity.LoginActivity;
+import com.example.pokestar.vaccineremind.ui.activity.RegisterActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +23,7 @@ import com.example.pokestar.vaccineremind.R;
  * Use the {@link MineFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseFragment {
 
 
     private OnFragmentInteractionListener mListener;
@@ -37,11 +42,50 @@ public class MineFragment extends Fragment {
 
     }
 
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_mine;
+    }
+
+    @Override
+    protected int getContainerId() {
+        return 0;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+        View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        initView(view);
+        return view;
+    }
+
+    private void initView(View view) {
+        Button button1 = view.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
+        });
+
+        Button button2 = view.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
+            }
+        });
+
+        Button button3 = view.findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
+            }
+        });
     }
 
 

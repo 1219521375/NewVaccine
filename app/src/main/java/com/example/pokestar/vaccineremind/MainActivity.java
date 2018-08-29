@@ -1,25 +1,18 @@
 package com.example.pokestar.vaccineremind;
 
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
-import com.example.pokestar.vaccineremind.ui.activity.SingleFragmentActivity;
-import com.example.pokestar.vaccineremind.ui.fragment.ForumFragment;
+import com.example.pokestar.vaccineremind.ui.activity.BaseActivity;
 import com.example.pokestar.vaccineremind.ui.fragment.KnowledgeFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.MineFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.VaccineFragment;
 import com.example.pokestar.vaccineremind.utils.BottomNavigationViewHelper;
 
-import java.lang.reflect.Field;
-
-public class MainActivity extends SingleFragmentActivity {
+public class MainActivity extends BaseActivity {
 
     private BottomNavigationView mBottomNavigationView;
     private MenuItem mMenuItem;
@@ -56,16 +49,16 @@ public class MainActivity extends SingleFragmentActivity {
             mMenuItem = item;
             switch (item.getItemId()){
                 case R.id.navigation_vaccine:
-                    switchFragment(VaccineFragment.newInstance());
+                    replaceFragment(VaccineFragment.newInstance());
                     return true;
                 case R.id.navigation_knowledge:
-                    switchFragment(KnowledgeFragment.newInstance());
+                    replaceFragment(KnowledgeFragment.newInstance());
                     return true;
                 /*case R.id.navigation_forum:
                     switchFragment(ForumFragment.newInstance());
                     return true;*/
                 case R.id.navigation_mine:
-                    switchFragment(MineFragment.newInstance());
+                    replaceFragment(MineFragment.newInstance());
                     return true;
             }
 

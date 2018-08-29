@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pokestar.vaccineremind.ui.fragment.AddVaccineFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/corners_bg"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            android:text="请设置下一针接种计划"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:textColor="#000"
+            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/button_set_vaccine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_corners"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="去设置"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请您及时添加接种计划哦~"
+            android:gravity="center"
+            android:textColor="#000"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+
+
+</FrameLayout>

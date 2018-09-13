@@ -2,14 +2,18 @@ package com.example.pokestar.vaccineremind.bean;
 
 import java.util.Date;
 
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobDate;
+
 /**
  * Created by PokeStar on 2018/8/22.
  */
 
-public class Vaccine {
+public class Vaccine extends BmobObject{
     String vacName;
-    Date vacTime;
-    Boolean isUsed;
+    String vacTime;
+    int useTimes;
+
 
     public String getVacName() {
         return vacName;
@@ -19,25 +23,20 @@ public class Vaccine {
         this.vacName = vacName;
     }
 
-    public Date getVacTime() {
+    public String getVacTime() {
         return vacTime;
     }
 
-    public void setVacTime(Date vacTime) {
+    public void setVacTime(String vacTime) {
         this.vacTime = vacTime;
     }
 
-    public Boolean getUsed() {
-        return isUsed;
+    public int getUseTimes() {
+        return useTimes;
     }
 
-    public void setUsed(Boolean used) {
-        isUsed = used;
+    public void setUseTimes(int useTimes) {
+        this.useTimes = useTimes;
     }
 
-    public Vaccine(String vacName, Date vacTime, Boolean isUsed) {
-        this.vacName = vacName;
-        this.vacTime = vacTime;
-        this.isUsed = isUsed;
-    }
 }

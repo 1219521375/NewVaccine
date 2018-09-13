@@ -18,18 +18,26 @@
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             android:background="@color/background_toolbar_gray">
             <com.example.pokestar.vaccineremind.widget.CircleImageView
+                android:id="@+id/image_baby"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/baby"/>
             <TextView
+                android:id="@+id/text_baby_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="#4cc23e"
                 android:textStyle="bold"
                 android:textSize="20dp"
-                android:text="张三 | 1岁零3个月  男"/>
+                android:text=""/>
+            <Button
+                android:id="@+id/add_baby"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_add"/>
 
         </LinearLayout>
 

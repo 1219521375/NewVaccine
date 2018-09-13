@@ -5,6 +5,7 @@ import com.bin.david.form.annotation.SmartTable;
 
 /**
  * Created by PokeStar on 2018/8/21.
+ * 用于显示参考疫苗列表
  */
 
 @SmartTable(name="一类疫苗")

@@ -9,11 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.activity.ChangePasswordActivity;
 import com.example.pokestar.vaccineremind.ui.activity.LoginActivity;
 import com.example.pokestar.vaccineremind.ui.activity.RegisterActivity;
+import com.example.pokestar.vaccineremind.utils.Configure;
+import com.leon.lib.settingview.LSettingItem;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +33,11 @@ public class MineFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private TextView mTextViewUser;
 
+    LSettingItem mItemBaby;
+    LSettingItem mItemUs;
+    LSettingItem mItemLogout;
 
 
     public static MineFragment newInstance() {
@@ -57,35 +66,63 @@ public class MineFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mine, container, false);
-        initView(view);
+        View view;
+        if(Configure.getUSERID(getActivity()).equals("")){
+            //未登录
+            view = inflater.inflate(R.layout.fragment_mine_unregist, container, false);
+            initLogin(view);
+        }else{
+            //已登录
+            view = inflater.inflate(R.layout.fragment_mine, container, false);
+            initView(view);
+        }
+
         return view;
     }
 
+    private void initLogin(View view) {
+        Button loginButton = (Button) view.findViewById(R.id.mine_login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button registerButton = (Button)view.findViewById(R.id.mine_register_button);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
     private void initView(View view) {
-        Button button1 = view.findViewById(R.id.button1);
-        button1.setOnClickListener(new View.OnClickListener() {
+
+        //已登录
+        mTextViewUser = view.findViewById(R.id.user);
+        mTextViewUser.setText(Configure.getUSERID(getActivity()) + "");
+
+        mItemBaby = view.findViewById(R.id.item_my_baby);
+        mItemUs = view.findViewById(R.id.item_us);
+        mItemLogout = view.findViewById(R.id.item_log_out);
+
+        mItemLogout.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+            public void click(boolean isChecked) {
+                Configure.setBABYID(getActivity(),"");
+                Configure.setUSERID(getActivity(),"");
+                getActivity().recreate();
             }
         });
 
-        Button button2 = view.findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), RegisterActivity.class));
-            }
-        });
 
-        Button button3 = view.findViewById(R.id.button3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
-            }
-        });
+
     }
 
 

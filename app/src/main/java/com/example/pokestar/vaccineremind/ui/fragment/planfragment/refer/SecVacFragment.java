@@ -31,7 +31,7 @@ public class SecVacFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-
+    List<TableVaccine> tableVaccineList = new ArrayList<>();
     public static SecVacFragment newInstance() {
         SecVacFragment fragment = new SecVacFragment();
         return fragment;
@@ -58,19 +58,20 @@ public class SecVacFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sec_vac, container, false);
+        initData();
         initView(view);
         return view;
+    }
+
+    private void initData() {
+        tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
     }
 
     private void initView(View view) {
 
         mSmartTable = (SmartTable<TableVaccine>) view.findViewById(R.id.second_vaccine_table);
 
-        List<TableVaccine> tableVaccineList = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
-            tableVaccineList.add(new TableVaccine("  二月龄  ","         五联疫苗         ",1));
-        }
 
         mSmartTable.setData(tableVaccineList);
         mSmartTable.getConfig()

@@ -1,5 +1,6 @@
 package com.example.pokestar.vaccineremind.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.fragment.KnowledgeFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.planfragment.ReferVaccineFragment;
@@ -57,6 +59,7 @@ public class VaccinePlanActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });

@@ -13,12 +13,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pokestar.vaccineremind.R;
+import com.example.pokestar.vaccineremind.bean.Baby;
 import com.example.pokestar.vaccineremind.bean.Vaccine;
+import com.example.pokestar.vaccineremind.bean.VaccineList;
 import com.example.pokestar.vaccineremind.ui.fragment.BaseFragment;
+import com.example.pokestar.vaccineremind.utils.Configure;
+import com.example.pokestar.vaccineremind.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.validation.Validator;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +42,12 @@ import java.util.List;
 public class VaccineRecordFragment extends BaseFragment {
     RecyclerView mRecyclerView;
 
-    List<Vaccine> mVaccineList;
+
+
+    List<Vaccine> mVaccineList = new ArrayList<Vaccine>();
     VaccineRecordAdapter mAdapter;
+
+    final int[] name = new int[2];
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,20 +78,68 @@ public class VaccineRecordFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vaccine_record, container, false);
-        initData();
-        initView(view);
+        final View view;
+        final TextView textViewDisplay;
+        if(Configure.getUSERID(getActivity()) == ""){
+            //未登录
+            view = inflater.inflate(R.layout.fragment_vac_record_unlist, container, false);
+            textViewDisplay = view.findViewById(R.id.record_display);
+            textViewDisplay.setText("请先登录！");
+        }
+        else{
+            //已登录
+            if(Configure.getBABYID(getActivity()) == ""){
+              //无baby
+                view = inflater.inflate(R.layout.fragment_vac_record_unlist, container, false);
+                textViewDisplay = view.findViewById(R.id.record_display);
+                textViewDisplay.setText("请先添加baby！");
+
+            }else{
+                //有baby
+                view = inflater.inflate(R.layout.fragment_vaccine_record, container, false);
+                BmobQuery<Baby> query = new BmobQuery<Baby>();
+                query.getObject(Configure.getBABYID(getActivity()), new QueryListener<Baby>() {
+                    @Override
+                    public void done(Baby baby, BmobException e) {
+                        if(e == null){
+                            if(baby.getVacListId()!=null && baby.getVacListId()!= ""){
+                                BmobQuery<VaccineList> query = new BmobQuery<VaccineList>();
+                                query.getObject(baby.getVacListId(), new QueryListener<VaccineList>() {
+                                    @Override
+                                    public void done(VaccineList vaccineList, BmobException e) {
+                                        mVaccineList = vaccineList.getVaccineList();
+                                        if(mVaccineList.size() == 0){
+
+                                            ToastUtil.showShort(getActivity(),"当前没有已打疫苗！");
+                                        }else {
+                                            ToastUtil.showShort(getActivity(), "11");
+                                            initView(view);
+                                        }
+                                    }
+                                });
+                            }
+                            else{
+                                replaceFragment(ReferVaccineFragment.newInstance());
+                            }
+
+
+                        }else {
+                            //TODO 在已登录有baby但没有vac记录的情况下会报错 9015 objectid orlistener must not be null（其他错误）
+                            //暂时无法解决
+
+                            ToastUtil.showShort(getActivity(),e.getErrorCode() + "  22");
+                        }
+                    }
+                });
+
+
+            }
+
+        }
 
         return view;
     }
 
-    private void initData() {
-        mVaccineList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mVaccineList.add(new Vaccine("五联疫苗",new Date(),false));
-        }
-
-    }
 
     private void initView(View view) {
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recyclerview_vac_record);
@@ -126,7 +189,7 @@ public class VaccineRecordFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(VaccineRecordAdapter.VacViewHolder holder, int position) {
             holder.vaccvineName.setText(mVaccineList.get(position).getVacName());
-            holder.vaccineTime.setText(mVaccineList.get(position).getVacTime().toString());
+            holder.vaccineTime.setText(mVaccineList.get(position).getVacTime());
 
         }
 
@@ -144,11 +207,9 @@ public class VaccineRecordFragment extends BaseFragment {
 
             TextView vaccvineName;
             TextView vaccineTime;
-            Button vaccineIscalled;
 
             public VacViewHolder(View itemView) {
                 super(itemView);
-                vaccineIscalled = (Button)itemView.findViewById(R.id.vaccine_iscalled);
                 vaccvineName = (TextView)itemView.findViewById(R.id.vaccine_name);
                 vaccineTime = (TextView)itemView.findViewById(R.id.vaccine_time);
             }

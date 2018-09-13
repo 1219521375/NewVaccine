@@ -23,18 +23,18 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"/>
             <TextView
+                android:id="@+id/display_vaccine_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018-08-20"
                 android:textColor="#000"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 android:layout_margin="10dp" />
             <TextView
+                android:id="@+id/display_vaccine_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="乙肝疫苗、肺炎疫苗"/>
+                android:layout_margin="10dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,6 +42,7 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/display_vaccine_left_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5天后接种"
@@ -50,6 +51,7 @@
                 android:layout_margin="20dp"/>
 
             <Button
+                android:id="@+id/display_change_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_corners"

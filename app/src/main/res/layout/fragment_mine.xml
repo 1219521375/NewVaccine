@@ -1,33 +1,67 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical"
-    android:fadingEdge="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:leon="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.example.pokestar.vaccineremind.ui.fragment.MineFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="110dp"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="#ffffff">
 
-        <Button
-            android:id="@+id/button1"
+        <TextView
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="26dp"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="19dp"
+            android:src="@drawable/baby" />
+        <TextView
+            android:id="@+id/personal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"/>
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="register"/>
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="change"/>
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="63dp"
+            android:text="编辑资料"
+            android:textColor="#d3d3d3"
+            android:textSize="16dp" />
+    </android.support.v7.widget.CardView>
+
+    <com.leon.lib.settingview.LSettingItem
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_my_baby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        leon:leftIcon="@drawable/ic_phone"
+        leon:leftText="我的宝宝"/>
 
 
-    </LinearLayout>
-</ScrollView>
+    <com.leon.lib.settingview.LSettingItem
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        leon:leftIcon="@drawable/ic_phone"
+        leon:leftText="关于我们"/>
+
+    <com.leon.lib.settingview.LSettingItem
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_log_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        leon:leftIcon="@drawable/ic_phone"
+        leon:leftText="退出登录"/>
+
+</LinearLayout>

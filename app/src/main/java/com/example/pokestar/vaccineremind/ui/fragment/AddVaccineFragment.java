@@ -1,6 +1,7 @@
 package com.example.pokestar.vaccineremind.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pokestar.vaccineremind.R;
+import com.example.pokestar.vaccineremind.bean.Baby;
+import com.example.pokestar.vaccineremind.bean.User;
+import com.example.pokestar.vaccineremind.ui.activity.AddBabyActivity;
+import com.example.pokestar.vaccineremind.ui.activity.AddVaccineActivity;
+import com.example.pokestar.vaccineremind.utils.Configure;
+import com.example.pokestar.vaccineremind.utils.ToastUtil;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +74,37 @@ public class AddVaccineFragment extends BaseFragment {
         buttonSetVaccine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(DisplayVaccineFragment.newInstance());
+                if(Configure.getUSERID(getActivity()).equals("")){
+                    Toast.makeText(getActivity(),"请先登录！",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    final BmobUser user1 = BmobUser.getCurrentUser();
+
+                    //判断用户有无baby
+                    BmobQuery<User> query = new BmobQuery<User>();
+                    query.getObject(user1.getObjectId(), new QueryListener<User>() {
+                        @Override
+                        public void done(User user, BmobException e) {
+                            if(e == null){
+                                if(user.getBabyId() == null){
+                                    //未创建baby 弹出toast
+                                    ToastUtil.showShort(getActivity(),"请先添加baby！");
+
+                                }else {
+                                    //用户当前有baby  跳转添加疫苗页面
+                                    startActivity(new Intent(getActivity(), AddVaccineActivity.class));
+                                    getActivity().finish();
+                                }
+
+                            }else {
+                                ToastUtil.showShort(getActivity(),e.getMessage());
+                            }
+                        }
+                    });
+
+
+
+                }
             }
         });
         return view;

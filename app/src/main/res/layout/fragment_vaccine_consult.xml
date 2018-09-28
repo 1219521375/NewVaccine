@@ -2,12 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pokestar.vaccineremind.ui.fragment.planfragment.VaccineConsultFragment">
+    tools:context="com.example.pokestar.vaccineremind.ui.fragment.VaccineConsultFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/vac_consult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询"/>
+        <Button
+            android:id="@+id/vac_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="假疫苗"/>
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

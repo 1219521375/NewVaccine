@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.pokestar.vaccineremind.ui.activity.BaseActivity;
-import com.example.pokestar.vaccineremind.ui.fragment.KnowledgeFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.MineFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.VaccineFragment;
+import com.example.pokestar.vaccineremind.ui.fragment.VaccineConsultFragment;
 import com.example.pokestar.vaccineremind.utils.BottomNavigationViewHelper;
 
 import cn.bmob.v3.Bmob;
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
                     replaceFragment(VaccineFragment.newInstance());
                     return true;
                 case R.id.navigation_knowledge:
-                    replaceFragment(KnowledgeFragment.newInstance());
+                    replaceFragment(VaccineConsultFragment.newInstance());
                     return true;
                 /*case R.id.navigation_forum:
                     switchFragment(ForumFragment.newInstance());

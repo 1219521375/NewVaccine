@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.fragment.BaseFragment;
-import com.example.pokestar.vaccineremind.ui.fragment.KnowledgeFragment;
-import com.example.pokestar.vaccineremind.ui.fragment.MineFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.planfragment.refer.FirstVacFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.planfragment.refer.SecVacFragment;
 import com.example.pokestar.vaccineremind.utils.FragmentAdapter;

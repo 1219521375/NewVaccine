@@ -12,7 +12,6 @@ import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.fragment.KnowledgeFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.planfragment.ReferVaccineFragment;
-import com.example.pokestar.vaccineremind.ui.fragment.planfragment.VaccineConsultFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.planfragment.VaccineRecordFragment;
 import com.example.pokestar.vaccineremind.utils.FragmentAdapter;
 
@@ -70,10 +69,8 @@ public class VaccinePlanActivity extends BaseActivity {
 
             VaccineRecordFragment ff=VaccineRecordFragment.newInstance();
             fragmentList.add(ff);
-            ReferVaccineFragment tf1=ReferVaccineFragment.newInstance();
-            VaccineConsultFragment tf2=VaccineConsultFragment.newInstance();
-            fragmentList.add(tf1);
-            fragmentList.add(tf2);
+            ReferVaccineFragment f1 = ReferVaccineFragment.newInstance();
+            fragmentList.add(f1);
         }
         mFragmentAdapter=new FragmentAdapter(getSupportFragmentManager(),fragmentList);
 
@@ -85,7 +82,6 @@ public class VaccinePlanActivity extends BaseActivity {
 
         mTabLayout.getTabAt(0).setText("接种记录");
         mTabLayout.getTabAt(1).setText("接种参考");
-        mTabLayout.getTabAt(2).setText("疫苗查询");
 
 
 

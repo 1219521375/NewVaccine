@@ -4,12 +4,12 @@
     <item
         android:id="@+id/navigation_vaccine"
         android:icon="@mipmap/testpic"
-        android:title="疫苗"
+        android:title="疫苗显示"
         />
     <item
         android:id="@+id/navigation_knowledge"
         android:icon="@mipmap/testpic"
-        android:title="育儿课堂"
+        android:title="疫苗查询"
         />
 
     <item

@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pokestar.vaccineremind.R;
@@ -21,13 +20,9 @@ import com.example.pokestar.vaccineremind.utils.Configure;
 import com.example.pokestar.vaccineremind.utils.ToastUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.xml.validation.Validator;
-
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 

@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pokestar.vaccineremind.ui.activity.VaccineMapCCActivity">
+    tools:context="com.example.pokestar.vaccineremind.ui.activity.VaccineMapWHActivity">
 
-   <com.baidu.mapapi.map.MapView
-       android:id="@+id/bmapView"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView_wh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-   </com.baidu.mapapi.map.MapView>
+    </com.baidu.mapapi.map.MapView>
 
 </android.support.constraint.ConstraintLayout>

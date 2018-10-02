@@ -14,13 +14,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许读取手机状态 用于创建BmobInstallation -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--读取系统信息，包含系统版本等信息，用作统计 -->
+    <!-- 读取系统信息，包含系统版本等信息，用作统计 -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <!--获取统计数据 -->
+    <!-- 获取统计数据 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!--使用步行AR导航，配置Camera权限 -->
+    <!-- 使用步行AR导航，配置Camera权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
 
     <application
         android:name=".application.MyApplication"
@@ -44,11 +43,13 @@
         <activity android:name=".ui.activity.AddBabyActivity" />
         <activity android:name=".ui.activity.AddVaccineActivity" />
         <activity android:name=".ui.activity.MineActivity" />
-        <activity android:name=".ui.activity.VaccineMapActivity"></activity>
+        <activity android:name=".ui.activity.VaccineMapCCActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="uBlCkZN6iBsKw0lbQ8nkSWvnGrmjMuMp" />
+
+        <activity android:name=".ui.activity.VaccineMapWHActivity"></activity>
     </application>
 
 </manifest>

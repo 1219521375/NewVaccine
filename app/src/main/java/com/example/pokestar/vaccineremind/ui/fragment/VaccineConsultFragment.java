@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.pokestar.vaccineremind.R;
-import com.example.pokestar.vaccineremind.ui.activity.VaccineMapActivity;
+import com.example.pokestar.vaccineremind.ui.activity.VaccineMapCCActivity;
+import com.example.pokestar.vaccineremind.ui.activity.VaccineMapWHActivity;
 import com.example.pokestar.vaccineremind.utils.ToastUtil;
 
 /**
@@ -26,7 +27,9 @@ public class VaccineConsultFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    Button mapButton;
+    Button mapCCButton;
+    Button mapWHButton;
+
     Button consultButton;
 
 
@@ -63,13 +66,22 @@ public class VaccineConsultFragment extends BaseFragment {
 
     private void initView(View view) {
 
-        mapButton = view.findViewById(R.id.vac_map);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        mapCCButton = view.findViewById(R.id.vac_map_cc);
+        mapCCButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), VaccineMapActivity.class));
+                startActivity(new Intent(getActivity(), VaccineMapCCActivity.class));
             }
         });
+
+        mapWHButton = view.findViewById(R.id.vac_map_wh);
+        mapWHButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), VaccineMapWHActivity.class));
+            }
+        });
+
 
         consultButton = view.findViewById(R.id.vac_consult);
         consultButton.setOnClickListener(new View.OnClickListener() {

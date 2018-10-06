@@ -16,6 +16,7 @@ import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.activity.ChangePasswordActivity;
 import com.example.pokestar.vaccineremind.ui.activity.LoginActivity;
+import com.example.pokestar.vaccineremind.ui.activity.MyBabyActivity;
 import com.example.pokestar.vaccineremind.ui.activity.RegisterActivity;
 import com.example.pokestar.vaccineremind.utils.Configure;
 import com.leon.lib.settingview.LSettingItem;
@@ -109,6 +110,12 @@ public class MineFragment extends BaseFragment {
         mTextViewUser.setText(Configure.getUSERID(getActivity()) + "");
 
         mItemBaby = view.findViewById(R.id.item_my_baby);
+        mItemBaby.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
+            @Override
+            public void click(boolean isChecked) {
+                startActivity(new Intent(getActivity(), MyBabyActivity.class));
+            }
+        });
         mItemUs = view.findViewById(R.id.item_us);
         mItemLogout = view.findViewById(R.id.item_log_out);
 

@@ -1,5 +1,6 @@
 package com.example.pokestar.vaccineremind.ui.activity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,11 @@ import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.example.pokestar.vaccineremind.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class VaccineMapCCActivity extends AppCompatActivity {
 
@@ -56,7 +62,14 @@ public class VaccineMapCCActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        /**
+         * MapView (TextureMapView)的
+         * {@link MapView.setCustomMapStylePath(String customMapStylePath)}
+         * 方法一定要在MapView(TextureMapView)创建之前调用。
+         * 如果是setContentView方法通过布局加载MapView(TextureMapView), 那么一定要放置在
+         * MapView.setCustomMapStylePath方法之后执行，否则个性化地图不会显示
+         */
+        setMapCustomFile(this, "mymap.json");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaccine_map);
 
@@ -64,53 +77,24 @@ public class VaccineMapCCActivity extends AppCompatActivity {
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
 
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().zoom(8).build()));
-
         initOverLay();
         initView();
 
+        mBaiduMap.setMapStatus(
+                MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder()
+                        .target(new LatLng(41.5794065934,120.4573500100))
+                        .zoom(7)
+                        .build()));
+
+        MapView.setMapCustomEnable(true);
+
     }
 
+    /**
+    *疫苗运行轨迹
+    * */
     private void initOverLay() {
 
-//        // add marker overlay
-//        LatLng llA = new LatLng(39.963175, 116.400244);
-//        LatLng llB = new LatLng(39.942821, 116.369199);
-//        LatLng llC = new LatLng(39.939723, 116.425541);
-//        LatLng llD = new LatLng(39.906965, 116.401394);
-//
-//        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-//                .zIndex(9).draggable(true);
-//      /*  if (animationBox.isChecked()) {
-//            // 掉下动画
-//            ooA.animateType(MarkerAnimateType.drop);
-//        }*/
-//        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
-//        MarkerOptions ooB = new MarkerOptions().position(llB).icon(bdB)
-//                .zIndex(5);
-//      /*  if (animationBox.isChecked()) {
-//            // 掉下动画
-//            ooB.animateType(MarkerAnimateType.drop);
-//        }*/
-//        mMarkerB = (Marker) (mBaiduMap.addOverlay(ooB));
-//        MarkerOptions ooC = new MarkerOptions().position(llC).icon(bdC)
-//                .perspective(false).anchor(0.5f, 0.5f).rotate(30).zIndex(7);
-//       /* if (animationBox.isChecked()) {
-//            // 生长动画
-//            ooC.animateType(MarkerAnimateType.grow);
-//        }*/
-//        mMarkerC = (Marker) (mBaiduMap.addOverlay(ooC));
-//        ArrayList<BitmapDescriptor> giflist = new ArrayList<BitmapDescriptor>();
-//        giflist.add(bdA);
-//        giflist.add(bdB);
-//        giflist.add(bdC);
-//        MarkerOptions ooD = new MarkerOptions().position(llD).icons(giflist)
-//                .zIndex(0).period(10);
-//       /* if (animationBox.isChecked()) {
-//            // 生长动画
-//            ooD.animateType(MarkerAnimateType.grow);
-//        }*/
-//        mMarkerD = (Marker) (mBaiduMap.addOverlay(ooD));
 
         // add ground overlay
         LatLng northeast = new LatLng(36.64804,117.03988);//山东疾控中心
@@ -145,10 +129,13 @@ public class VaccineMapCCActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 坐标点
+     */
     private void initView() {
-//坐标点
+        //坐标点
 
-        //长春长生制药
+        /** 长春长生制药*/
         //定义Maker坐标点
         LatLng cccsPoint = new LatLng(43.7993,125.2542);
         //构建Marker图标
@@ -174,14 +161,11 @@ public class VaccineMapCCActivity extends AppCompatActivity {
         mBaiduMap.addOverlay(textOption);
 
 
-
-
-
-        //山东疾控中心
+        /** 山东疾控中心*/
         //定义Maker坐标点
         LatLng sdjkPoint = new LatLng(36.6539524483,117.0464421932);
         //构建Marker图标
-        BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.vacmappoint);
+        BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_blue);
 
 
         //构建MarkerOption，用于在地图上添加Marker
@@ -193,7 +177,7 @@ public class VaccineMapCCActivity extends AppCompatActivity {
                 //.bgColor(0xAAFFFF00)
                 .fontSize(24)
                 //.fontColor(0xFFFF00FF)
-                .text("山东省疾控中心")
+                .text("山东省(济南)疾控中心")
                 //.rotate(-30)
                 .position(sdjkPoint);
 
@@ -204,69 +188,210 @@ public class VaccineMapCCActivity extends AppCompatActivity {
         //在地图上添加Marker，并显示
         mBaiduMap.addOverlay(option2);
 
+        /** 山东各省市  济南、淄博、烟台、济宁、泰安、威海、日照、莱芜 **/
+        /**
+         * 济南疾控中心
+         */
+        //定义Maker坐标点
+        LatLng jnjkPoint = new LatLng(36.7025734689,117.5204028515);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("济南市疾控中心")
+                //.rotate(-30)
+                .position(jnjkPoint));
 
 
-//        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_marker, null);
-//
-//        // ImageView img_hotel_image=
-//        // (ImageView)view.findViewById(R.id.img_hotel_image);
-//        // new
-//        // DownloadImageTask(img_hotel_image).execute(hotel.getHotelImageUrl());
-//
-//        TextView tv_hotel_price = (TextView) view.findViewById(R.id.tv_hotel_price);
-//        tv_hotel_price.setText(new StringBuilder().append(hotel.getHotelPrice()).append("￥起"));
-//        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromBitmap(getViewBitmap(view));
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("HOTEL", hotel);
-//
-//        OverlayOptions oo = new MarkerOptions().position(ll).icon(markerIcon).zIndex(9).draggable(true).extraInfo(bundle);
-//        mBaiduMap.addOverlay(oo);
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(jnjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 淄博疾控中心
+         */
+        //定义Maker坐标点
+        LatLng zbjkPoint = new LatLng(36.7950788323,118.0596837174);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("淄博市疾控中心")
+                //.rotate(-30)
+                .position(zbjkPoint));
 
 
-        //        //构建文字Option对象，用于在地图上添加文字
-//        OverlayOptions textOption = new TextOptions()
-//                .bgColor(0xAAFFFF00)
-//                .fontSize(24)
-//                .fontColor(0xFFFF00FF)
-//                .text("长春长生制药/假疫苗源头")
-//                .rotate(-30)
-//                .position(cccsPoint);
-//
-//        //在地图上添加该文字对象并显示
-//        mBaiduMap.addOverlay(textOption);
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(zbjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
 
-//        //武汉生物制药
-//        LatLng whswPoint = new LatLng(30.3707,114.2604);
-//        //构建Marker图标
-//        BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.back);
-//        //构建MarkerOption，用于在地图上添加Marker
-//        OverlayOptions option2 = new MarkerOptions()
-//                .position(whswPoint)
-//                .icon(bitmap2);
-//        //在地图上添加Marker，并显示
-//        mBaiduMap.addOverlay(option2);
-//
-//        //创建InfoWindow展示的view 信息窗
-//        Button button = new Button(getApplicationContext());
-//        button.setBackgroundResource(R.drawable.icon_marka);
-//        TextView textView = new TextView(getApplicationContext());
-//        textView.setText("武汉生物制药");
-//
-//
-//         //创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
-//        InfoWindow mInfoWindow = new InfoWindow(textView, whswPoint, -47);
-//
-//        //显示InfoWindow
-//        mBaiduMap.showInfoWindow(mInfoWindow);
+        /**
+         * 烟台疾控中心
+         */
+        //定义Maker坐标点
+        LatLng ytjkPoint = new LatLng(37.4719069326,121.4581601136);
 
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("烟台市疾控中心")
+                //.rotate(-30)
+                .position(ytjkPoint));
 
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(ytjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
 
+        /**
+         * 济宁疾控中心
+         */
+        //定义Maker坐标点
+        LatLng jnijkPoint = new LatLng(35.5826795913,116.9997452449);
 
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("济宁市疾控中心")
+                //.rotate(-30)
+                .position(jnijkPoint));
 
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(jnijkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 泰安疾控中心
+         */
+        //定义Maker坐标点
+        LatLng tajkPoint = new LatLng(36.1869626953,116.8047691141);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("泰安市疾控中心")
+                //.rotate(-30)
+                .position(tajkPoint));
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(tajkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 威海疾控中心
+         */
+        //定义Maker坐标点
+        LatLng whjkPoint = new LatLng(37.5137206876,122.1291906890);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("威海市疾控中心")
+                //.rotate(-30)
+                .position(whjkPoint));
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(whjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 日照疾控中心
+         */
+        //定义Maker坐标点
+        LatLng rzjkPoint = new LatLng(35.4340743562,119.5303139449);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("日照市疾控中心")
+                //.rotate(-30)
+                .position(rzjkPoint));
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(rzjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 莱芜疾控中心
+         */
+        //定义Maker坐标点
+        LatLng lwjkPoint = new LatLng(36.2178311771,117.6934842771);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("莱芜市疾控中心")
+                //.rotate(-30)
+                .position(lwjkPoint));
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(lwjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
 
 
     }
+
+    // 设置个性化地图config文件路径
+    private void setMapCustomFile(Context context, String PATH) {
+        FileOutputStream out = null;
+        InputStream inputStream = null;
+        String moduleName = null;
+        try {
+            inputStream = context.getAssets()
+                    .open(PATH);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+
+            moduleName = context.getFilesDir().getAbsolutePath();
+            File f = new File(moduleName + "/" + PATH);
+            if (f.exists()) {
+                f.delete();
+            }
+            f.createNewFile();
+            out = new FileOutputStream(f);
+            out.write(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        MapView.setCustomMapStylePath(moduleName + "/" + PATH);
+
+    }
+
 
     /**
      * Gets the view bitmap.
@@ -293,6 +418,7 @@ public class VaccineMapCCActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        MapView.setMapCustomEnable(false);
         mMapView.onDestroy();
         super.onDestroy();
 

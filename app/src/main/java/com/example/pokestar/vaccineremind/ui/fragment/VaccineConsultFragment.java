@@ -5,15 +5,24 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.allen.library.SuperTextView;
 import com.example.pokestar.vaccineremind.R;
+import com.example.pokestar.vaccineremind.bean.VaccineSql;
 import com.example.pokestar.vaccineremind.ui.activity.VaccineMapCCActivity;
 import com.example.pokestar.vaccineremind.ui.activity.VaccineMapWHActivity;
-import com.example.pokestar.vaccineremind.utils.ToastUtil;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +38,11 @@ public class VaccineConsultFragment extends BaseFragment {
 
     Button mapCCButton;
     Button mapWHButton;
+
+    MaterialEditText input;
+    SuperTextView output_name;
+    SuperTextView output_company;
+    SuperTextView output_time;
 
     Button consultButton;
 
@@ -59,9 +73,57 @@ public class VaccineConsultFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccine_consult, container, false);
 
+        initConsult(view);
         initView(view);
 
         return view;
+    }
+
+    private void initConsult(View view) {
+
+        input = view.findViewById(R.id.consult_edit_in);
+        output_name = view.findViewById(R.id.consult_text_out1);
+        output_company = view.findViewById(R.id.consult_text_out2);
+        output_time = view.findViewById(R.id.consult_text_out3);
+
+
+
+        consultButton = view.findViewById(R.id.vac_consult);
+        consultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String consult_in = "'" + input.getText().toString() + "'";
+                BmobQuery<VaccineSql> query = new BmobQuery<VaccineSql>();
+                //查询BatchNumber叫consult_in的数据
+                query.addWhereEqualTo("BatchNumber", consult_in);
+                //返回50条数据，如果不加上这条语句，默认返回10条数据
+                query.setLimit(5);
+                //执行查询方法
+                query.findObjects(new FindListener<VaccineSql>() {
+                    @Override
+                    public void done(List<VaccineSql> object, BmobException e) {
+                        if(e==null){
+                            output_name.setLeftString("疫苗名：");
+                            output_name.setRightString(object.get(0).getVaccineName().replace("'",""));
+                            output_company.setLeftString("生产公司：");
+                            output_company.setRightString(object.get(0).getCompany().replace("'",""));
+                            output_time.setLeftString("有效期限：");
+                            output_time.setRightString(object.get(0).getValidityPeriod().replace("'",""));
+                        }else{
+                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                            output_name.setCenterString("未查询到相应的疫苗！");
+                        }
+                    }
+                });
+
+            }
+        });
+
+
+
+
+
+
     }
 
     private void initView(View view) {
@@ -82,15 +144,6 @@ public class VaccineConsultFragment extends BaseFragment {
             }
         });
 
-
-        consultButton = view.findViewById(R.id.vac_consult);
-        consultButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO
-                ToastUtil.showShort(getActivity(),"TODO");
-            }
-        });
 
     }
 

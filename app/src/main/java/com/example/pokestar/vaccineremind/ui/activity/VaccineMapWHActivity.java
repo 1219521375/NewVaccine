@@ -1,5 +1,6 @@
 package com.example.pokestar.vaccineremind.ui.activity;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -19,6 +20,11 @@ import com.baidu.mapapi.map.TextOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.example.pokestar.vaccineremind.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class VaccineMapWHActivity extends AppCompatActivity {
 
@@ -44,18 +50,73 @@ public class VaccineMapWHActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /**
+         * MapView (TextureMapView)的
+         * {@link MapView.setCustomMapStylePath(String customMapStylePath)}
+         * 方法一定要在MapView(TextureMapView)创建之前调用。
+         * 如果是setContentView方法通过布局加载MapView(TextureMapView), 那么一定要放置在
+         * MapView.setCustomMapStylePath方法之后执行，否则个性化地图不会显示
+         */
+        setMapCustomFile(this, "mymap.json");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaccine_map_wh);
 
         mMapView = (MapView) findViewById(R.id.bmapView_wh);
         mBaiduMap = mMapView.getMap();
 
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().zoom(8).build()));
-
         initOverLay();
         initView();
 
+        mBaiduMap.setMapStatus(
+                MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder()
+                        .target(new LatLng(36.0941023381,111.5261276258))
+                        .zoom(7)
+                        .build()));
+
+        MapView.setMapCustomEnable(true);
+
     }
+
+    // 设置个性化地图config文件路径
+    private void setMapCustomFile(Context context, String PATH) {
+        FileOutputStream out = null;
+        InputStream inputStream = null;
+        String moduleName = null;
+        try {
+            inputStream = context.getAssets()
+                    .open(PATH);
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+
+            moduleName = context.getFilesDir().getAbsolutePath();
+            File f = new File(moduleName + "/" + PATH);
+            if (f.exists()) {
+                f.delete();
+            }
+            f.createNewFile();
+            out = new FileOutputStream(f);
+            out.write(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        MapView.setCustomMapStylePath(moduleName + "/" + PATH);
+
+    }
+
 
     private void initView() {
 
@@ -88,7 +149,7 @@ public class VaccineMapWHActivity extends AppCompatActivity {
         //定义Maker坐标点
         LatLng hbjkPoint = new LatLng(38.0284596488,114.5255852654);
         //构建Marker图标
-        BitmapDescriptor bitmap1 = BitmapDescriptorFactory.fromResource(R.drawable.vacmappoint);
+        BitmapDescriptor bitmap1 = BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_blue);
 
         //构建MarkerOption，用于在地图上添加Marker
         OverlayOptions option1 = new MarkerOptions()
@@ -113,7 +174,7 @@ public class VaccineMapWHActivity extends AppCompatActivity {
         //定义Maker坐标点
         LatLng cqjkPoint = new LatLng(29.5486729840,106.5337964588);
         //构建Marker图标
-        BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.vacmappoint);
+        BitmapDescriptor bitmap2 = BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_blue);
 
         //构建MarkerOption，用于在地图上添加Marker
         OverlayOptions option2 = new MarkerOptions()
@@ -132,6 +193,74 @@ public class VaccineMapWHActivity extends AppCompatActivity {
 
         //在地图上添加该文字对象并显示
         mBaiduMap.addOverlay(textOption2);
+
+        /**
+         * 河北 石家庄 廊坊 定州
+         * 重庆27个区县
+         */
+
+        /**
+         * 石家庄疾控中心
+         */
+        //定义Maker坐标点
+        LatLng sjzjkPoint = new LatLng(38.0506178098,114.5147220418);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("石家庄市疾控中心")
+                //.rotate(-30)
+                .position(sjzjkPoint));
+
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(sjzjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 廊坊疾控中心
+         */
+        //定义Maker坐标点
+        LatLng lfjkPoint = new LatLng(39.5534109230,116.7329705429);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("廊坊市疾控中心")
+                //.rotate(-30)
+                .position(lfjkPoint));
+
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(lfjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
+
+        /**
+         * 定州市疾控中心
+         */
+        //定义Maker坐标点
+        LatLng dzjkPoint = new LatLng(38.5186576414,114.9723709301);
+
+        //在地图上添加该文字对象并显示
+        mBaiduMap.addOverlay(new TextOptions()
+                //.bgColor(0xAAFFFF00)
+                .fontSize(24)
+                //.fontColor(0xFFFF00FF)
+                .text("定州市疾控中心")
+                //.rotate(-30)
+                .position(dzjkPoint));
+
+
+        //在地图上添加Marker，并显示
+        mBaiduMap.addOverlay(new MarkerOptions()
+                .position(dzjkPoint)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.vacpoint_green)));
 
 
 
@@ -206,6 +335,7 @@ public class VaccineMapWHActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        MapView.setMapCustomEnable(false);
         mMapView.onDestroy();
         super.onDestroy();
 

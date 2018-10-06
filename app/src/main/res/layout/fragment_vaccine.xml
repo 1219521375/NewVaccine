@@ -61,18 +61,30 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <Button
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+                    <info.hoang8f.widget.FButton
                         android:id="@+id/button_vaccine_plan"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:buttonColor="@color/background_green"
+                        android:padding="5dp"
                         android:text="疫苗计划"/>
-                    <Button
+
+                    <LinearLayout
+                        android:layout_width="10dp"
+                        android:layout_height="0dp">
+
+                    </LinearLayout>
+
+                    <info.hoang8f.widget.FButton
                         android:id="@+id/button_call_doc"
                         android:layout_weight="1"
+                        android:padding="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:buttonColor="@color/background_green"
                         android:text="联系门诊"/>
                 </LinearLayout>
 
@@ -125,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
-            app:fab_title="添加宝宝 a"
+            app:fab_title="添加宝宝"
             app:fab_colorPressed="@color/white_pressed"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -133,7 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
-            app:fab_title="切换宝宝 b"
+            app:fab_title="我的宝宝"
             app:fab_colorPressed="@color/white_pressed"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

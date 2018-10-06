@@ -1,0 +1,81 @@
+[
+  {
+    "featureType": "land",
+    "elementType": "all",
+    "stylers": {
+      "color": "#00436eff"
+    }
+  },
+  {
+    "featureType": "highway",
+    "elementType": "all",
+    "stylers": {
+      "color": "#4893c3ff",
+      "visibility": "off"
+    }
+  },
+  {
+    "featureType": "manmade",
+    "elementType": "all",
+    "stylers": {
+      "visibility": "off"
+    }
+  },
+  {
+    "featureType": "green",
+    "elementType": "all",
+    "stylers": {
+      "visibility": "off"
+    }
+  },
+  {
+    "featureType": "manmade",
+    "elementType": "all",
+    "stylers": {
+      "color": "#4893c3ff"
+    }
+  },
+  {
+    "featureType": "medical",
+    "elementType": "all",
+    "stylers": {
+      "color": "#1481c6ff"
+    }
+  },
+  {
+    "featureType": "medicallabel",
+    "elementType": "all",
+    "stylers": {
+      "color": "#41aaedff"
+    }
+  },
+  {
+    "featureType": "city",
+    "elementType": "labels.text.stroke",
+    "stylers": {
+      "color": "#b1f8f8ff",
+      "weight": "0.1"
+    }
+  },
+  {
+    "featureType": "boundary",
+    "elementType": "all",
+    "stylers": {
+      "color": "#00ffffff"
+    }
+  },
+  {
+    "featureType": "railway",
+    "elementType": "all",
+    "stylers": {
+      "visibility": "off"
+    }
+  },
+  {
+    "featureType": "water",
+    "elementType": "all",
+    "stylers": {
+      "color": "#b7c9d5ff"
+    }
+  }
+]

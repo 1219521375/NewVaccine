@@ -5,12 +5,16 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.pokestar.vaccineremind.ui.activity.BaseActivity;
 import com.example.pokestar.vaccineremind.ui.fragment.MineFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.VaccineFragment;
 import com.example.pokestar.vaccineremind.ui.fragment.VaccineConsultFragment;
 import com.example.pokestar.vaccineremind.utils.BottomNavigationViewHelper;
+
+
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
 

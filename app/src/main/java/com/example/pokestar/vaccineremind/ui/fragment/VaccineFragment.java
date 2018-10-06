@@ -2,6 +2,8 @@ package com.example.pokestar.vaccineremind.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +26,19 @@ import android.widget.Toast;
 
 import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
+import com.example.pokestar.vaccineremind.adapter.VaccineKnowAdapter;
 import com.example.pokestar.vaccineremind.application.MyApplication;
 import com.example.pokestar.vaccineremind.bean.Baby;
 import com.example.pokestar.vaccineremind.bean.User;
+import com.example.pokestar.vaccineremind.bean.VaccineNews;
+import com.example.pokestar.vaccineremind.database.VNDao;
 import com.example.pokestar.vaccineremind.ui.activity.AddBabyActivity;
+import com.example.pokestar.vaccineremind.ui.activity.MyBabyActivity;
 import com.example.pokestar.vaccineremind.ui.activity.VaccinePlanActivity;
+import com.example.pokestar.vaccineremind.ui.activity.WebNewsActivity;
 import com.example.pokestar.vaccineremind.utils.Configure;
 import com.example.pokestar.vaccineremind.utils.ToastUtil;
+import com.example.pokestar.vaccineremind.widget.NetImageView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -39,8 +48,10 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
+import info.hoang8f.widget.FButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,11 +67,12 @@ public class VaccineFragment extends BaseFragment {
     private ImageView mImageView_baby;
 
     private OnFragmentInteractionListener mListener;
-    private Button button_vacplan;
-    private Button button_calldoc;
+    private FButton button_vacplan;
+    private FButton button_calldoc;
 
     RecyclerView mRecyclerView;
     List<String> titles;
+    List<VaccineNews> mNews = new ArrayList<VaccineNews>();
 
 
     final List<Baby> mBabyList = new ArrayList<>();
@@ -97,6 +109,7 @@ public class VaccineFragment extends BaseFragment {
         initFragmentView();
 
         button_vacplan = view.findViewById(R.id.button_vaccine_plan);
+        button_vacplan.setButtonColor(Color.parseColor("#43bf79"));
         button_vacplan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +118,7 @@ public class VaccineFragment extends BaseFragment {
             }
         });
         button_calldoc = view.findViewById(R.id.button_call_doc);
+        button_calldoc.setButtonColor(Color.parseColor("#43bf79"));
         button_calldoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,23 +127,14 @@ public class VaccineFragment extends BaseFragment {
             }
         });
 
-        //floatingButton
-        final View actionB =view.findViewById(R.id.action_b);
-        actionB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO button2切换宝宝
-            }
-        });
+
 
         FloatingActionButton actionC = new FloatingActionButton(getActivity());
-        actionC.setTitle("Hide/Show Action above");
+        actionC.setTitle("test-add baby");
         actionC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO BUTTON3
-                ToastUtil.showShort(getActivity(),"ac");
-                //actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+                startActivity(new Intent(getActivity(),AddBabyActivity.class));
             }
         });
 
@@ -185,11 +190,20 @@ public class VaccineFragment extends BaseFragment {
             }
         });
 
-
+        //floatingButton
+        final View actionB =view.findViewById(R.id.action_b);
+        actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MyBabyActivity.class));
+            }
+        });
 
 
 
         initToolbarView(view);
+
+        initData();
 
         initRecyclerView(view);
 
@@ -197,15 +211,62 @@ public class VaccineFragment extends BaseFragment {
 
     }
 
-    private void initRecyclerView(View view) {
-
+    private void initData() {
         titles = new ArrayList<String>();
         titles.add("this is tile.");
+
+//        BmobQuery<VaccineNews> query = new BmobQuery<VaccineNews>();
+//        //返回50条数据，如果不加上这条语句，默认返回10条数据
+//        query.setLimit(4);
+//        //执行查询方法
+//        query.findObjects(new FindListener<VaccineNews>() {
+//            @Override
+//            public void done(List<VaccineNews> object, BmobException e) {
+//                if(e==null){
+//                    //获得SharedPreferences的实例 sp_name是文件名
+//                    SharedPreferences sp = getActivity().getSharedPreferences("vaccine_news", Context.MODE_PRIVATE);
+//                    //获得Editor 实例
+//                    SharedPreferences.Editor editor = sp.edit();
+//                    //以key-value形式保存数据
+//                    editor.putString("1_title", "data");
+//                    //apply()是异步写入数据
+//                    editor.apply();
+//
+//
+//                    ToastUtil.showShort(getActivity(), "");
+//
+//                }else{
+//                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                }
+//            }
+//
+//        });
+        mNews.add(new VaccineNews("关于刷屏的“假疫苗”真相，你知道多少","https://baijiahao.baidu.com/s?id=1606664160402430025&wfr=spider&for=pc","https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3971911016,3067881133&fm=173&app=25&f=JPEG?w=640&h=265&s=3C24C21512717621165814710300C0F0"));
+        mNews.add(new VaccineNews("宝宝必打疫苗有哪些?","http://www.mama.cn/z/art/58093/","http://pics.mama.cn/attachment/mamacn/images/201805/20180528/103347_80284.jpg"));
+        mNews.add(new VaccineNews("开启每日补充“新”计划，让宝宝身高增!","http://zt.mama.cn/subject/dymwdkt4-pc/","http://pics.mama.cn/attachment/mamacn/images/201803/20180313/094637_77585_w280_h140.jpg"));
+        mNews.add(new VaccineNews("如何预防秋燥上火，让宝宝少生病？","http://www.mama.cn/special/sangongzi/","http://pics.mama.cn/attachment/mamacn/images/201709/20170928/144008_15350_w280_h140.jpg"));
+        mNews.add(new VaccineNews("全城热议二胎开放 生or不生？","http://www.mama.cn/special/ertai/","http://pics.mama.cn/attachment/mamacn/images/201511/20151106/100616_68112_w280_h140.jpg"));
+
+    }
+
+    private void initRecyclerView(View view) {
+
+
 
 
         mRecyclerView = view.findViewById(R.id.recycler_view_vaccine_know);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(new VaccineKnowAdapter());
+        final VaccineKnowAdapter adapter = new VaccineKnowAdapter(getActivity(),mNews);
+        adapter.setItemClickListener(new VaccineKnowAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //TODO 跳转webview
+                Intent intent = new Intent(getActivity(), WebNewsActivity.class);
+                intent.putExtra("url",mNews.get(position).getUrl());
+                startActivity(intent);
+            }
+        });
+        mRecyclerView.setAdapter(adapter);
 
 
 
@@ -257,7 +318,7 @@ public class VaccineFragment extends BaseFragment {
         }
 
 
-        ToastUtil.showShort(getActivity(),"1 " + mBabyList.size());
+       // ToastUtil.showShort(getActivity(),"1 " + mBabyList.size());
 
 
     }
@@ -295,8 +356,7 @@ public class VaccineFragment extends BaseFragment {
                                 public void done(Baby baby, BmobException e) {
                                     if(e == null){
                                         mImageView_baby.setImageResource(R.drawable.baby);
-                                        mTextView_baby_data.setText(baby.getName() + " | " + "birth");
-
+                                        mTextView_baby_data.setText(baby.getName() + " | " + baby.getBirth().getDate().subSequence(0,10));
 
                                     }else {
                                         mImageView_baby.setImageResource(R.drawable.baby);
@@ -307,7 +367,6 @@ public class VaccineFragment extends BaseFragment {
                                 }
                             });
                         }
-
                     }else {
                         mImageView_baby.setImageResource(R.drawable.baby);
                         mTextView_baby_data.setText("请先添加宝宝");
@@ -350,81 +409,6 @@ public class VaccineFragment extends BaseFragment {
     }
 
 
-    public class VaccineKnowAdapter extends RecyclerView.Adapter<VaccineKnowAdapter.ViewHolder>{
 
-        /**
-         * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
-         * an item.
-         * <p>
-         * This new ViewHolder should be constructed with a new View that can represent the items
-         * of the given type. You can either create a new View manually or inflate it from an XML
-         * layout file.
-         * <p>
-         * The new ViewHolder will be used to display items of the adapter using
-         * Since it will be re-used to display
-         * different items in the data set, it is a good idea to cache references to sub views of
-         * the View to avoid unnecessary {@link View#findViewById(int)} calls.
-         *
-         * @param parent   The ViewGroup into which the new View will be added after it is bound to
-         *                 an adapter position.
-         * @param viewType The view type of the new View.
-         * @return A new ViewHolder that holds a View of the given view type.
-         * @see #getItemViewType(int)
-         * @see #onBindViewHolder(ViewHolder, int)
-         */
-        @Override
-        public VaccineKnowAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            VaccineKnowAdapter.ViewHolder holder = new VaccineKnowAdapter.ViewHolder(
-                    LayoutInflater.from(getActivity()).inflate(R.layout.know_vaccine,parent,false));
-            return holder;
-        }
-
-        /**
-         * Called by RecyclerView to display the data at the specified position. This method should
-         * update the contents of the {@link ViewHolder#itemView} to reflect the item at the given
-         * position.
-         * <p>
-         * Note that unlike {@link ListView}, RecyclerView will not call this method
-         * again if the position of the item changes in the data set unless the item itself is
-         * invalidated or the new position cannot be determined. For this reason, you should only
-         * use the <code>position</code> parameter while acquiring the related data item inside
-         * this method and should not keep a copy of it. If you need the position of an item later
-         * on (e.g. in a click listener), use {@link ViewHolder#getAdapterPosition()} which will
-         * have the updated adapter position.
-         * <p>
-         *
-         * @param holder   The ViewHolder which should be updated to represent the contents of the
-         *                 item at the given position in the data set.
-         * @param position The position of the item within the adapter's data set.
-         */
-        @Override
-        public void onBindViewHolder(VaccineKnowAdapter.ViewHolder holder, int position) {
-            holder.textTitle.setText("This is title.");
-            holder.imageKnow.setImageResource(R.drawable.baby);
-
-        }
-
-        /**
-         * Returns the total number of items in the data set held by the adapter.
-         *
-         * @return The total number of items in this adapter.
-         */
-        @Override
-        public int getItemCount() {
-            return 5;
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            TextView textTitle;
-            ImageView imageKnow;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                textTitle =(TextView)itemView.findViewById(R.id.know_title);
-                imageKnow = (ImageView)itemView.findViewById(R.id.know_image);
-            }
-        }
-    }
 
 }

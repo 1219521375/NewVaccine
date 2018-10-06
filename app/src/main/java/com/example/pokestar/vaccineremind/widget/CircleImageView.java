@@ -16,7 +16,7 @@ import android.widget.ImageView;
  * Created by PokeStar on 2018/8/10.
  */
 
-public class CircleImageView extends ImageView {
+public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
     private Paint paint ;
 
     public CircleImageView(Context context) {

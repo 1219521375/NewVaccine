@@ -2,41 +2,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.example.pokestar.vaccineremind.ui.fragment.VaccineConsultFragment">
 
+
+    <TextView
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:text="疫苗批次查询"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:orientation="vertical"
+        android:background="#8de3ff"
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/consult_edit_in"
+            android:layout_marginTop="20dp"
+            android:background="#000"
+            app:met_baseColor="#0056d3"
+            app:met_primaryColor="#982360"
+            app:met_errorColor="#ddaa00"
+            app:met_iconLeft="@drawable/vaccine"
+            android:hint="请输入疫苗批次"
+            android:textColor="#982360"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="50dp" />
+
+        <com.allen.library.SuperButton
             android:id="@+id/vac_consult"
-            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            app:sCornersRadius="5dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="查询"/>
 
+        <com.allen.library.SuperTextView
+            android:id="@+id/consult_text_out1"
+            app:sShapeCornersRadius="5dp"
+            app:sLeftTextString="疫苗名："
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="50dp">
+
+        </com.allen.library.SuperTextView>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/consult_text_out2"
+            android:layout_marginTop="10dp"
+            app:sShapeCornersRadius="5dp"
+            app:sLeftTextString="生产公司："
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="50dp">
+
+        </com.allen.library.SuperTextView>
+        <com.allen.library.SuperTextView
+            android:id="@+id/consult_text_out3"
+            android:layout_marginTop="10dp"
+            app:sShapeCornersRadius="5dp"
+            app:sLeftTextString="有效期限："
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="50dp">
+
+        </com.allen.library.SuperTextView>
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#8de3ff"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="15dp"
+        android:padding="10dp"
+        android:text="假疫苗流向（已公布）"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="假疫苗流向"/>
-        <Button
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#8de3ff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.allen.library.SuperButton
             android:id="@+id/vac_map_cc"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="长春长生制药"/>
-        <Button
+        <com.allen.library.SuperButton
             android:id="@+id/vac_map_wh"
             android:text="武汉生物制药"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
 
 

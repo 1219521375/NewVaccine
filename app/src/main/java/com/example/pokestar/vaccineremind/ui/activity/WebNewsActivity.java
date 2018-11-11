@@ -36,6 +36,7 @@ public class WebNewsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mUrl = intent.getStringExtra("url");
+        ToastUtil.showShort(getApplicationContext(),mUrl);
 
 //        WebSettings settings = mWebView.getSettings();
 //        // 设置支持js脚本

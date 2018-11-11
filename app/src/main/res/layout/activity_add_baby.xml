@@ -40,6 +40,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
+            <ImageView
+                android:id="@+id/baby_imageView"
+                android:layout_gravity="center"
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
+            <info.hoang8f.widget.FButton
+                android:id="@+id/baby_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="image"
+                android:layout_gravity="center"/>
             <com.github.florent37.materialtextfield.MaterialTextField
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,16 +93,18 @@
                 android:layout_height="wrap_content">
 
 
-                <info.hoang8f.widget.FButton
+                <Button
                     android:id="@+id/sex_man"
                     android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/background_green"
                     android:layout_weight="1"
                     android:text="男"/>
-                <info.hoang8f.widget.FButton
+                <Button
                     android:id="@+id/sex_woman"
                     android:layout_margin="10dp"
+                    android:background="@color/background_green"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -108,16 +122,7 @@
                 android:layout_height="wrap_content"
                 />
 
-            <Button
-                android:id="@+id/baby_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="image"
-                android:layout_gravity="center"/>
-            <ImageView
-                android:id="@+id/baby_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
 
         </LinearLayout>
 

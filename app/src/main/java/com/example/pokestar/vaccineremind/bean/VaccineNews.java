@@ -17,8 +17,8 @@ public class VaccineNews extends BmobObject {
 
     public VaccineNews(String title, String url, String imageUrl) {
         this.title = title;
-        Url = url;
-        ImageUrl = imageUrl;
+        this.Url = url;
+        this.ImageUrl = imageUrl;
     }
 
     public String getTitle() {

@@ -44,7 +44,7 @@
         android:id="@+id/item_my_baby"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        leon:leftIcon="@drawable/ic_phone"
+        leon:leftIcon="@drawable/baby_icon"
         leon:leftText="我的宝宝"/>
 
 
@@ -53,7 +53,7 @@
         android:id="@+id/item_us"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        leon:leftIcon="@drawable/ic_phone"
+        leon:leftIcon="@drawable/ic_page"
         leon:leftText="关于我们"/>
 
     <com.leon.lib.settingview.LSettingItem

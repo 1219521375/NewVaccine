@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.DetailActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Toolbar
+            android:title="接种注意事项"
+            android:navigationIcon="@drawable/back"
+            android:background="@color/background_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </Toolbar>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vaccine_detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="预防接种前后的常见问题"
+                android:textColor="#000"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:text="\n(1)要在孩子健康状况良好时进行，若发烧应推迟接种，等病好后及时补种。\n(2)接种前，保持接种部位皮肤清洁。经检查认为没有接种“禁忌症”方可接种。 (3)孩子患发热性疾病、急性传染病、有过敏性疾病(如哮喘)、湿疹、患先天性免疫缺陷病、心脏病、肾炎及肝炎等疾病时均不能接种。属过敏体质易发生严重过敏反应者，应向接种医生说明。 (4)接种疫苗后，绝大多数小儿不会有什么异常感觉和表现；少数儿童接种后局部会出现红肿、疼痛、发痒或有低热，一般不需特殊处理，反应会自然消失。反应强烈或出现异常的，应及时送医院处理。\n(5)接种完毕，应在接种场所观察15～30分钟，确定无反应再离开接种门诊。孩子打过防疫针以后要避免剧烈活动，对孩子要细心照料，注意观察。 48小时内针眼不能碰上水"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

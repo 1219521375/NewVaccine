@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.pokestar.vaccineremind.ui.activity.BaseActivity;
@@ -48,6 +49,8 @@ public class MainActivity extends BaseActivity {
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
 
         initBmob();
+
+
 
     }
 

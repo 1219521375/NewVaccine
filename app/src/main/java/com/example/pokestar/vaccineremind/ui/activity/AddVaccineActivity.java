@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.allen.library.SuperTextView;
 import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.bean.Baby;
@@ -40,11 +41,12 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import info.hoang8f.widget.FButton;
 
 public class AddVaccineActivity extends AppCompatActivity {
 
-    private Button mButtonAddTime;
-    private Button mButtonAddVacOk;
+    private FButton mButtonAddTime;
+    private FButton mButtonAddVacOk;
 
     Calendar mCalendar;
 
@@ -55,6 +57,8 @@ public class AddVaccineActivity extends AppCompatActivity {
 
     List<Vaccine> BabyVacList;
 
+    SuperTextView vacTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,7 @@ public class AddVaccineActivity extends AppCompatActivity {
         mButtonAddTime = findViewById(R.id.add_vaccine_time);
         mButtonAddVacOk = findViewById(R.id.add_vaccine_ok);
         mRecyclerViewVacList = findViewById(R.id.add_vaccine_list);
+        vacTime = findViewById(R.id.set_vac_time);
 
         initData();
 
@@ -73,11 +78,31 @@ public class AddVaccineActivity extends AppCompatActivity {
 
         BabyVacList = new ArrayList<Vaccine>();
         VacList = new ArrayList<String>();
-        for (int i = 0; i < 20; i++) {
-            VacList.add("乙肝疫苗" + i);
-
-        }
-
+        VacList.add("乙肝疫苗第一针");
+        VacList.add("卡介苗疫苗");
+        VacList.add("乙肝疫苗第二针");
+        VacList.add("脊髓灰质炎糖丸第一针");
+        VacList.add("脊髓灰质炎糖丸第二针");
+        VacList.add("百白破疫苗初种");
+        VacList.add("脊髓灰质炎糖丸第三针");
+        VacList.add("百白破疫苗第二针");
+        VacList.add("百白破疫苗第三针");
+        VacList.add("乙肝疫苗第三针");
+        VacList.add("A群流脑疫苗第一针");
+        VacList.add("麻疹疫苗第一针");
+        VacList.add("A群流脑疫苗第二针");
+        VacList.add("乙脑疫苗—初种");
+        VacList.add("百白破疫苗—加强");
+        VacList.add("脊髓灰质炎糖丸—部分加强");
+        VacList.add("乙脑疫苗—加强");
+        VacList.add("甲肝疫苗");
+        VacList.add("A群流脑疫苗—第三针");
+        VacList.add("脊髓灰质炎疫苗—加强针");
+        VacList.add("麻疹疫苗—加强针");
+        VacList.add("白破二联疫苗—加强针");
+        VacList.add("乙脑疫苗—第三针");
+        VacList.add("A群流脑疫苗—第四针");
+        VacList.add("卡介苗—加强针");
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -98,6 +123,7 @@ public class AddVaccineActivity extends AppCompatActivity {
                         Vacyear =  year;
                         Vacmonth = month+1;
                         Vacday = dayOfMonth;
+                        vacTime.setLeftBottomString(Vacyear + "-" + Vacmonth + "-" + Vacday);
                     }
                 }
                         // 设置初始日期

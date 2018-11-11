@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class SecVacFragment extends BaseFragment {
 
-    SmartTable<TableVaccine> mSmartTable;
+   // SmartTable<TableVaccine> mSmartTable;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,21 +64,38 @@ public class SecVacFragment extends BaseFragment {
     }
 
     private void initData() {
+        /**
+         * A+C群流脑疫苗：3周岁注射1针次，6、9周岁各加强一针。
+         无细胞百白破疫苗：可替代全细胞百白破疫苗，接种程序同全细胞百白破疫苗。
+         麻腮风疫苗：1.5-2周岁注射一针，基础免疫后4年加强1针。
+         甲肝减毒活疫苗或甲肝灭活疫苗：甲肝减毒活疫苗接种时间是2岁时注射1针，4年后加强1针。灭活疫苗1-16岁接种2针，间隔6个月，16岁以上接种1针。
+         水痘疫苗：1-12岁接种1针次。
+         B型流感嗜血杆菌苗：2、4、6月龄各注射一次，12月龄以上接种一针即可。
+         流行性感冒疫苗：1-3周岁每年注射2针，间隔1个月。3周岁以上每年接种1次即可。
+
+         */
+        tableVaccineList.add(new TableVaccine("三周岁"," A+C群流脑疫苗",1));
+        tableVaccineList.add(new TableVaccine("六周岁"," A+C群流脑疫苗",2));
+        tableVaccineList.add(new TableVaccine("九周岁"," A+C群流脑疫苗",3));
+        tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
+        tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
+        tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
+        tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
         tableVaccineList.add(new TableVaccine("二月龄","五联疫苗",1));
     }
 
     private void initView(View view) {
 
-        mSmartTable = (SmartTable<TableVaccine>) view.findViewById(R.id.second_vaccine_table);
-
-
-
-        mSmartTable.setData(tableVaccineList);
-        mSmartTable.getConfig()
-                .setShowTableTitle(false)
-                .setShowXSequence(false)
-                .setShowYSequence(false)
-                .setContentStyle(new FontStyle(60,000000));
+//        mSmartTable = (SmartTable<TableVaccine>) view.findViewById(R.id.second_vaccine_table);
+//
+//
+//
+//        mSmartTable.setData(tableVaccineList);
+//        mSmartTable.getConfig()
+//                .setShowTableTitle(false)
+//                .setShowXSequence(false)
+//                .setShowYSequence(false)
+//                .setContentStyle(new FontStyle(60,000000));
 
 
 

@@ -1,7 +1,11 @@
 package com.example.pokestar.vaccineremind.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +20,14 @@ import com.example.pokestar.vaccineremind.MainActivity;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.ui.activity.ChangePasswordActivity;
 import com.example.pokestar.vaccineremind.ui.activity.LoginActivity;
+import com.example.pokestar.vaccineremind.ui.activity.LogoActivity;
 import com.example.pokestar.vaccineremind.ui.activity.MyBabyActivity;
 import com.example.pokestar.vaccineremind.ui.activity.RegisterActivity;
 import com.example.pokestar.vaccineremind.utils.Configure;
+import com.example.pokestar.vaccineremind.utils.ToastUtil;
 import com.leon.lib.settingview.LSettingItem;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,15 +48,70 @@ public class MineFragment extends BaseFragment {
     LSettingItem mItemUs;
     LSettingItem mItemLogout;
 
+    public final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            updateToNewLocation(location);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            updateToNewLocation(null);
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    private void updateToNewLocation(Location location) {
+        double lat;//维度
+        double lng;//经度
+
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            ToastUtil.showShort(getContext(),lat +"" + lng);
+        }
+    }
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //创建位置管理器对象
+        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        //检测权限
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+        //提供者
+        String provider;
+        //获取可以定位的所有提供者
+        List<String> providerList = locationManager.getProviders(true);
+        if (providerList.contains(LocationManager.GPS_PROVIDER)) {
+            provider = LocationManager.GPS_PROVIDER;
+            locationManager.requestLocationUpdates(provider, Integer.MAX_VALUE, 0, mLocationListener);
+        }
+        if (providerList.contains(LocationManager.NETWORK_PROVIDER)) {
+            provider = LocationManager.NETWORK_PROVIDER;
+            locationManager.requestLocationUpdates(provider, Integer.MAX_VALUE, 0, mLocationListener);
+        }
+        if (providerList.contains(LocationManager.PASSIVE_PROVIDER)) {
+            provider = LocationManager.PASSIVE_PROVIDER;
+            locationManager.requestLocationUpdates(provider, Integer.MAX_VALUE, 0, mLocationListener);
+        }
+
 
     }
 
@@ -117,6 +180,13 @@ public class MineFragment extends BaseFragment {
             }
         });
         mItemUs = view.findViewById(R.id.item_us);
+        mItemUs.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {
+            @Override
+            public void click(boolean isChecked) {
+                startActivity(new Intent(getActivity(), LogoActivity.class));
+            }
+        });
+
         mItemLogout = view.findViewById(R.id.item_log_out);
 
         mItemLogout.setmOnLSettingItemClick(new LSettingItem.OnLSettingItemClick() {

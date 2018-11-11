@@ -39,23 +39,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="您的孩子在何时接种疫苗呢？"/>
-            <Button
-                android:id="@+id/add_vaccine_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="设置接种时间"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="您的孩子下次接种什么疫苗呢？"/>
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/set_vac_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:textSize="20dp"
+                    app:sLeftTopTextString="您的孩子在何时接种疫苗呢" />
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/add_vaccine_time"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置接种时间"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.allen.library.SuperTextView
+                    android:layout_weight="2"
+                    android:textSize="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    app:sCenterTextString="您的孩子下次接种什么疫苗呢" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/add_vaccine_list"
@@ -66,15 +87,26 @@
 
                 </android.support.v7.widget.RecyclerView>
 
-                <Button
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom"
-                    android:id="@+id/add_vaccine_ok"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="确认添加"/>
+
+
+                    <info.hoang8f.widget.FButton
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:layout_alignParentBottom="true"
+                        app:buttonColor="@color/fbutton_color_green_sea"
+                        android:id="@+id/add_vaccine_ok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="确认添加"/>
+
 
             </RelativeLayout>
+
+
+
+
+
+
 
 
 

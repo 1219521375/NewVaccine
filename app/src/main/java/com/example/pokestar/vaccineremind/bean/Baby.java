@@ -21,7 +21,17 @@ public class Baby extends BmobObject {
     String userId;
     BmobFile image;
     String vacListId;
-    List<Vaccine> mVaccineList = new ArrayList<Vaccine>();
+    String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    List<Vaccine> mVaccineList;
     int year;
     int month;
     int day;

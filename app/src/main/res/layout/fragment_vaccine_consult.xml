@@ -76,6 +76,13 @@
             android:layout_height="50dp">
 
         </com.allen.library.SuperTextView>
+        <com.allen.library.SuperButton
+            android:id="@+id/consult_map_open"
+            android:text="在地图上查看"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -87,7 +94,7 @@
         android:gravity="center"
         android:textColor="#000"
         android:textSize="15dp"
-        android:padding="10dp"
+        android:padding="5dp"
         android:text="假疫苗流向（已公布）"/>
 
     <LinearLayout

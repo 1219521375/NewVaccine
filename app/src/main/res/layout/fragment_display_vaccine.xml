@@ -4,21 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.pokestar.vaccineremind.ui.fragment.DisplayVaccineFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="@drawable/corners_bg"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2">
+        android:background="@drawable/corners_bg">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
+                android:layout_alignParentStart="true"
                 android:text="下一针接种时间"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"/>
@@ -27,25 +23,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:layout_margin="10dp" />
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="25dp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/display_vaccine_name"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp" />
+
             <TextView
                 android:id="@+id/display_vaccine_left_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5天后接种"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_margin="20dp"/>
@@ -55,12 +51,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_corners"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="60dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="修改时间"/>
+            <Button
+                android:id="@+id/details_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="注意事项"
+                android:background="@drawable/detail"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"/>
 
-        </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

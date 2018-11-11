@@ -36,7 +36,7 @@ import java.io.InputStream;
 public class VaccineMapCCActivity extends AppCompatActivity {
 
     private MapView mMapView = null;
-    BaiduMap mBaiduMap;
+    private BaiduMap mBaiduMap;
 
 
 
@@ -151,7 +151,7 @@ public class VaccineMapCCActivity extends AppCompatActivity {
 
         OverlayOptions textOption = new TextOptions()
                 //.bgColor(0xAAFFFF00)
-                .fontSize(24)
+                .fontSize(40)
                 //.fontColor(0xFFFF00FF)
                 .text("长春长生制药/假疫苗源头")
                 //.rotate(-30)

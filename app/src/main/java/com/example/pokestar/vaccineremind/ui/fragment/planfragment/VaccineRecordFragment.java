@@ -66,7 +66,7 @@ public class VaccineRecordFragment extends BaseFragment {
 
     @Override
     protected int getContainerId() {
-        return R.id.viewpager_vaccine_plan;
+        return R.id.vaccine_plan_list;
     }
 
     @Override

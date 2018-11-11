@@ -1,67 +1,17 @@
 [
   {
-    "featureType": "land",
+    "featureType": "road",
     "elementType": "all",
     "stylers": {
-      "color": "#00436eff"
+      "lightness": 20
     }
   },
   {
     "featureType": "highway",
-    "elementType": "all",
+    "elementType": "geometry",
     "stylers": {
-      "color": "#4893c3ff",
+      "color": "#f49935",
       "visibility": "off"
-    }
-  },
-  {
-    "featureType": "manmade",
-    "elementType": "all",
-    "stylers": {
-      "visibility": "off"
-    }
-  },
-  {
-    "featureType": "green",
-    "elementType": "all",
-    "stylers": {
-      "visibility": "off"
-    }
-  },
-  {
-    "featureType": "manmade",
-    "elementType": "all",
-    "stylers": {
-      "color": "#4893c3ff"
-    }
-  },
-  {
-    "featureType": "medical",
-    "elementType": "all",
-    "stylers": {
-      "color": "#1481c6ff"
-    }
-  },
-  {
-    "featureType": "medicallabel",
-    "elementType": "all",
-    "stylers": {
-      "color": "#41aaedff"
-    }
-  },
-  {
-    "featureType": "city",
-    "elementType": "labels.text.stroke",
-    "stylers": {
-      "color": "#b1f8f8ff",
-      "weight": "0.1"
-    }
-  },
-  {
-    "featureType": "boundary",
-    "elementType": "all",
-    "stylers": {
-      "color": "#00ffffff"
     }
   },
   {
@@ -72,10 +22,24 @@
     }
   },
   {
+    "featureType": "highway",
+    "elementType": "labels",
+    "stylers": {
+      "visibility": "off"
+    }
+  },
+  {
     "featureType": "water",
     "elementType": "all",
     "stylers": {
-      "color": "#b7c9d5ff"
+      "color": "#d1e5ff"
+    }
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels",
+    "stylers": {
+      "visibility": "off"
     }
   }
 ]

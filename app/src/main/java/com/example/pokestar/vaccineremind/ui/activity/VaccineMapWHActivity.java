@@ -29,7 +29,7 @@ import java.io.InputStream;
 public class VaccineMapWHActivity extends AppCompatActivity {
 
     private MapView mMapView = null;
-    BaiduMap mBaiduMap;
+    private BaiduMap mBaiduMap;
 
     // 初始化全局 bitmap 信息，不用时及时 recycle
     BitmapDescriptor bdA = BitmapDescriptorFactory
@@ -135,7 +135,7 @@ public class VaccineMapWHActivity extends AppCompatActivity {
 
         OverlayOptions textOption = new TextOptions()
                 //.bgColor(0xAAFFFF00)
-                .fontSize(24)
+                .fontSize(35)
                 //.fontColor(0xFFFF00FF)
                 .text("武汉生物制药/假疫苗源头")
                 //.rotate(-30)
@@ -255,6 +255,7 @@ public class VaccineMapWHActivity extends AppCompatActivity {
                 .text("定州市疾控中心")
                 //.rotate(-30)
                 .position(dzjkPoint));
+
 
 
         //在地图上添加Marker，并显示

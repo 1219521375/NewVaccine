@@ -14,8 +14,10 @@ import android.widget.Button;
 import com.allen.library.SuperTextView;
 import com.example.pokestar.vaccineremind.R;
 import com.example.pokestar.vaccineremind.bean.VaccineSql;
+import com.example.pokestar.vaccineremind.ui.activity.DetailMapActivity;
 import com.example.pokestar.vaccineremind.ui.activity.VaccineMapCCActivity;
 import com.example.pokestar.vaccineremind.ui.activity.VaccineMapWHActivity;
+import com.example.pokestar.vaccineremind.utils.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
@@ -45,6 +47,7 @@ public class VaccineConsultFragment extends BaseFragment {
     SuperTextView output_time;
 
     Button consultButton;
+    Button openMapButton;
 
 
     public static VaccineConsultFragment newInstance() {
@@ -64,7 +67,7 @@ public class VaccineConsultFragment extends BaseFragment {
 
     @Override
     protected int getContainerId() {
-        return R.id.viewpager_vaccine_plan;
+        return R.id.vaccine_plan_list;
     }
 
     @Override
@@ -103,15 +106,26 @@ public class VaccineConsultFragment extends BaseFragment {
                     @Override
                     public void done(List<VaccineSql> object, BmobException e) {
                         if(e==null){
+                            String cccs = "长春长生生物科技";
+                            String whsw = "武汉生物制品";
                             output_name.setLeftString("疫苗名：");
                             output_name.setRightString(object.get(0).getVaccineName().replace("'",""));
                             output_company.setLeftString("生产公司：");
                             output_company.setRightString(object.get(0).getCompany().replace("'",""));
+                            if(object.get(0).getCompany().replace("'","").substring(0,4).equals(cccs.substring(0,4))){
+                                ToastUtil.showShort(getActivity(),"该公司曾经生产过问题疫苗！");
+                            }
+                            if(object.get(0).getCompany().replace("'","").substring(0,4).equals(whsw.substring(0,4))){
+                                ToastUtil.showShort(getActivity(),"该公司曾经生产过问题疫苗！");
+
+                            }
                             output_time.setLeftString("有效期限：");
                             output_time.setRightString(object.get(0).getValidityPeriod().replace("'",""));
                         }else{
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                            output_name.setCenterString("未查询到相应的疫苗！");
+                            output_name.setRightString("未查询到相应的疫苗！");
+                            output_company.setRightString(" ");
+                            output_time.setRightString("");
                         }
                     }
                 });
@@ -141,6 +155,16 @@ public class VaccineConsultFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), VaccineMapWHActivity.class));
+            }
+        });
+
+        openMapButton = view.findViewById(R.id.consult_map_open);
+        openMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DetailMapActivity.class);
+                intent.putExtra("company",output_company.getRightString());
+                startActivity(intent);
             }
         });
 

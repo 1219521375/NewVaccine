@@ -8,12 +8,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.bin.david.form.core.SmartTable
-            android:id="@+id/second_vaccine_table"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="20dp"
+            android:text="         第二类疫苗，是指由公民自费并且自愿受种的其他疫苗。
+常见的二类疫苗有：口服轮状病毒疫苗、甲肝疫苗、HIB疫苗、流感疫苗、狂犬病疫苗等。
+         二类疫苗中有可替代一类疫苗的选择，乙肝疫苗就属于一类疫苗，但二类疫苗中也有乙肝疫苗可供选择，如进口的乙肝疫苗就是二类疫苗。
+由于种类繁多，这里不再列出"/>
 
-            />
+
+
 
     </ScrollView>
 
